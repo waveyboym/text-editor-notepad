@@ -1,13 +1,20 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
+import { motion } from "framer-motion";
 
 type SearchProps = {
     apptheme: Boolean,
-    notescolours: String[],
     searchq: String
 }
 
-export const Search : FunctionComponent<SearchProps> = ({apptheme, notescolours, searchq}) => {
+export const Search : FunctionComponent<SearchProps> = ({apptheme, searchq}) => {
     return (
-        <div>Search</div>
+        <motion.div
+            className=""
+            initial={{scale: 0.9, opacity: 0}}
+            animate={{scale: 1, opacity: 1}}
+            exit={{scale: 0.9, opacity: 0}}
+        >
+            Search
+        </motion.div>
     )
 }
