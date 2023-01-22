@@ -16,6 +16,9 @@ type HomeProps = {
                     islocked: boolean,
                     fullnotetext: string;
                 }[],
+    changenote: (noteid: string, notedata: string) => void;
+    mouseenter: () => void;
+    mouseleave: () => void;
 }
 
 const variantsleft = {
@@ -28,7 +31,7 @@ const variantsright = {
     wide: { width: "50%",},
 }
 
-export const Home : FunctionComponent<HomeProps> = ({apptheme, generalcs, notes_array}) => {
+export const Home : FunctionComponent<HomeProps> = ({apptheme, generalcs, notes_array, changenote, mouseenter, mouseleave}) => {
 
     const [gridview, setgridview] = useState<boolean>(true);
     const [largeNoteOpen, setlargeNoteOpen] = useState<boolean>(false);
@@ -50,10 +53,30 @@ export const Home : FunctionComponent<HomeProps> = ({apptheme, generalcs, notes_
     function changeView(){setgridview(!gridview);}
 
     function makeNoteLarger(noteid: string){
+        if(largeNoteOpen === true)changenote(noteToOpen.noteid, noteToOpen.fullnotetext);
+
         const noteObj = notes_array.find(e => e.noteid === noteid);
         if(noteObj === undefined)return;
         setnoteToOpen(noteObj);
         setlargeNoteOpen(true);
+    }
+
+    function makeNoteSmaller(){
+        if(largeNoteOpen === true)changenote(noteToOpen.noteid, noteToOpen.fullnotetext);
+        setnoteToOpen({ noteid: "",
+                        lst_edt_dt: "",
+                        previewtxt: "",
+                        previewtxtcol: "",
+                        bgCOL: "",
+                        islocked: false,
+                        fullnotetext: ""});
+        setlargeNoteOpen(false);
+    }
+
+    function saveNoteChanges(notedata: string){setnoteToOpen({...noteToOpen, fullnotetext: notedata});}
+
+    function openNoteEditor(arg: string){
+
     }
     
     return (
@@ -96,11 +119,25 @@ export const Home : FunctionComponent<HomeProps> = ({apptheme, generalcs, notes_
                             gridview={gridview}
                             opennotelarger={makeNoteLarger}/>)}
                 </motion.div>
-                <motion.div className="flex min-h-[346px]" 
+                <motion.div className="min-h-[346px]" 
                     animate={largeNoteOpen ? "wide" : "normal"}
                     variants={variantsright}
                     style={{visibility: largeNoteOpen ? "visible" : "hidden"}}>
-                        <Notepreview apptheme={apptheme} generalcs={generalcs} note={noteToOpen}/>
+                        <Notepreview  
+                            note={noteToOpen} 
+                            apptheme={apptheme}
+                            generalcs={generalcs}
+                            closeNote={makeNoteSmaller}
+                            changeNote={saveNoteChanges}
+                            openEditor={openNoteEditor}
+                            mouseenter={mouseenter} 
+                            mouseleave={mouseleave}
+                            />
+                        <p className="italic text-[10px] ml-[20px] mt-[-40px] text-left font-normal"
+                            style={{color: colours.gray900}}
+                        >
+                            *autosave is enabled by default so your text will be saved as you type
+                        </p>
                 </motion.div>
             </div>
         </motion.div>

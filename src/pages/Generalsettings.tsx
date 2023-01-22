@@ -178,7 +178,7 @@ const Generalsettings: FunctionComponent<Generalsettingsprops> = ({apptheme, gen
                 <div className="h-[24px] mr-[219px] rounded-[20px] w-[166px] flex flex-wrap items-center overflow-visible" 
                     style={{boxShadow: shadows.bgShadow, background: generalcs}}>
                         <p className="mr-[20px] font-['Inter'] text-[12px] italic ml-[25px]" 
-                            style={{color: apptheme ? colours.black900 : colours.white900 }}>
+                            style={{color: colours.white900 }}>
                                 select format
                         </p>
                         <motion.div className="mr-[21px]"
