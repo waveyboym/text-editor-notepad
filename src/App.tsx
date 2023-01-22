@@ -41,6 +41,23 @@ function App() {
 
     function changeMouseToDefault(){set_isDefault(!isDefault);}
 
+    function saveNoteChanges(noteid: string, notedata: string){
+        const notes : { 
+            noteid: string,
+            lst_edt_dt: string,
+            previewtxt: string,
+            previewtxtcol: string,
+            bgCOL: string,
+            islocked: boolean,
+            fullnotetext: string;
+        }[] = notes_array.map(note =>{
+            if(note.noteid === noteid)return {...note, fullnotetext: notedata};
+            else return note;
+        });
+        
+        set_notes_array(notes);
+    }
+
     function createNote(){
         
     }
@@ -115,7 +132,13 @@ function App() {
                                                 generalcs={general_cs}
                                                 storagesize={diskSize} />
                                 default:
-                                    return <Home apptheme={isLighttheme} generalcs={general_cs} notes_array={notes_array}/>
+                                    return <Home 
+                                                apptheme={isLighttheme} 
+                                                generalcs={general_cs} 
+                                                notes_array={notes_array} 
+                                                mouseenter={changeMouseToTextSelect}
+                                                mouseleave={changeMouseToDefault}
+                                                changenote={saveNoteChanges}/>
                             }
                         }
                         )()
