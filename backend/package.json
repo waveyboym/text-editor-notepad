@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "check-disk-space": "^3.3.1",
+    "framer-motion": "^8.2.4",
+    "os-name": "^5.1.0",
+    "react-contenteditable": "^3.3.6",
+    "systeminformation": "^5.17.3",
+    "use-local-storage": "^2.3.6",
+    "uuid": "^9.0.0",
+    "zustand": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "^2.8.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.2.4",
+    "vite": "^4.0.4"
+  }
+}
