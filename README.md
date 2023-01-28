@@ -1,5 +1,5 @@
 # text-editor-notepad
-a simple text editor application done with wails and typescript react
+a simple text editor application done with **<a href="https://wails.io/" target="_blank" rel="noreferrer">wails</a>** and **<a href="https://reactjs.org/" target="_blank" rel="noreferrer">react</a>** + **<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">typescript</a>** + **<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>**
 
 # Presentation
 ![presentation](preview-img/notes-app.png "presentation")
