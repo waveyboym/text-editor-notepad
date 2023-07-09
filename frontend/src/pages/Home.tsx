@@ -59,6 +59,7 @@ export const Home : FunctionComponent<HomeProps> = ({
 
     function makeNoteSmaller(){
         if(largeNoteOpen === true)changenote(openedNote.noteid, openedNote.fullnotestxt);
+        console.log(openedNote.noteid);
         openThisNote("");
         setlargeNoteOpen(false);
     }

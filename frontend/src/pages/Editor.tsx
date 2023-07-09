@@ -6,7 +6,7 @@ import { Justifylefticon, Justifyicon, Justifycentericon, Justifyrighticon,
         Htwoicon, Hthreeicon, Linkicon, Linkicongrey, Listolicon, Listulicon, Codeslashicon,
         Minimizeicon, Unlockicon, Shareicon, Lockicon, Imagefileicon, Trashicon, Chevronleftw,} from '../icons/icons';
 import { motion } from "framer-motion";
-//import { Sharenote } from '../components';
+import { Sharenote } from '../components';
 
 type EditorProps = {
     apptheme: boolean,
@@ -27,6 +27,9 @@ export const Editor : FunctionComponent<EditorProps> = ({apptheme, generalcs, op
 
     const [crrntlySelectedHicon, set_crrntlySelectedHicon] = useState<string>("Honeicon");
     const [textState, settextState] = useState<string>(openedNote.fullnotestxt);
+    const [share_note_menu, set_share_note_menu] = useState<boolean>(false);
+
+    function toggleShare_Note_Menu(){set_share_note_menu(!share_note_menu);}
 
     const onContentChange = useCallback((evt: { currentTarget: { innerHTML: SetStateAction<string>; }; }) => {
 		settextState(evt.currentTarget.innerHTML);
@@ -101,10 +104,10 @@ export const Editor : FunctionComponent<EditorProps> = ({apptheme, generalcs, op
                 </div>
 
                 <div className="w-[108px] justify-evenly flex items-center ml-[10px]">
-                    <motion.div onClick={() => {}} whileHover={{scale: 1.03}} whileTap={{scale: 0.97}}>
+                    <motion.div onClick={toggleShare_Note_Menu} whileHover={{scale: 1.03}} whileTap={{scale: 0.97}}>
                         <Shareicon apptheme={apptheme}/>
                     </motion.div>
-                    <motion.div onClick={() => {}} whileHover={{scale: 1.03}} whileTap={{scale: 0.97}}>
+                    <motion.div onClick={() => closenote(openedNote.noteid, textState)} whileHover={{scale: 1.03}} whileTap={{scale: 0.97}}>
                         <Minimizeicon apptheme={apptheme}/>
                     </motion.div>
                 </div>
@@ -138,7 +141,7 @@ export const Editor : FunctionComponent<EditorProps> = ({apptheme, generalcs, op
                             <motion.div 
                                 whileHover={{scale: 1.03}}
                                 whileTap={{scale: 0.97}}
-                                onClick={() => {}}><Chevronleftw /></motion.div>
+                                onClick={() => closenote(openedNote.noteid, textState)}><Chevronleftw /></motion.div>
                             <p className="ml-[4px] italic text-[12px]" style={{color: colours.gray900}}>{openedNote.last_edited_date}</p>
                         </div>
                         <div className="ml-[17px] mr-[17px] mt-[3px] mb-[17px] overflow-hidden" 
@@ -160,7 +163,11 @@ export const Editor : FunctionComponent<EditorProps> = ({apptheme, generalcs, op
                         >
                         *autosave is enabled by default so your text will be saved as you type
                     </p>
+                    <div className="mt-[-48.5%] ml-[70%] z-50">
+                        <Sharenote apptheme={apptheme} fullnotestext={textState} sharenote_open={share_note_menu} />
+                    </div>
                 </div>
+
             </div>
         </div>
     )

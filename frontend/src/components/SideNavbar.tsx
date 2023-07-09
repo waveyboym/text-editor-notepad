@@ -8,7 +8,7 @@ type SideNavBarProps = {
     apptheme: boolean,
     generalcs: string,
     changePg: (arg: string) => void;
-    createNote: () => void;
+    createNote: (arg: any) => void;//it's a string
 }
 
 const variants = {
@@ -22,11 +22,19 @@ export const SideNavbar : FunctionComponent<SideNavBarProps> = ({selected_page, 
 
     function newNote(){
         set_createNewNoteDialogue(!show_createNewNoteDialogue);
-        createNote();
+        createNote("");
     }
 
-    function txt_file_upload(){
+    function txt_file_upload(e: any){
+        e.preventDefault();
+        
         set_createNewNoteDialogue(!show_createNewNoteDialogue);
+        const reader = new FileReader();
+        reader.onload = async (e) => { 
+            const text = (e.target?.result);
+            createNote(text);
+        };
+        reader.readAsText(e.target.files[0]);
     }
 
     return (
@@ -64,12 +72,13 @@ export const SideNavbar : FunctionComponent<SideNavBarProps> = ({selected_page, 
                         </h5>
                     </motion.div>
 
-                    <motion.div className="flex ml-[12px] mt-[12px]" onClick={txt_file_upload} whileTap={{scale: 0.97}}>
+                    <motion.div className="flex ml-[12px] mt-[12px]" whileTap={{scale: 0.97}}>
                         <Textfileicon apptheme={apptheme}/>
-                        <h5  className="ml-[7px] text-[14px] font-medium"
+                        <label  className="ml-[7px] text-[14px] font-medium"
                             style={{color: apptheme ? colours.black900 : colours.white900}}>
                             Import a text file
-                        </h5>
+                            <input type="file" accept="txt" className='hidden' id="fileInput" onChange={txt_file_upload}/>
+                        </label>
                     </motion.div>
 
             </motion.div>

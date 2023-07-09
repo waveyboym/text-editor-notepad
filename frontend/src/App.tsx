@@ -31,6 +31,8 @@ function App() {
         fullnotestxt: string,
     }>({noteid: "", last_edited_date: "", islocked: false, note_txt_colour: "", note_bg_colour: "", fullnotestxt: ""});
 
+    const[tempNoteCount, setCount] = useState<number>(8);
+
 
     const [noteTextState, setnoteTextState] = useState<string | undefined>();
     const [noteLockState, setnoteLockState] = useState<boolean | undefined>();
@@ -53,7 +55,9 @@ function App() {
 
     function changeToPage(page: string){set_current_page(page);}
 
-    function searchThis(search: string){set_search_query(search); /*changeToPage("Search");*/}
+    function searchThis(search: string){
+        set_search_query(search); /*changeToPage("Search");*/
+    }
 
     function handleNoteChanges(type: string, data: string){
         if(type === "fullnotestxt")setnoteTextState(data);
@@ -84,9 +88,9 @@ function App() {
             note_bg_colour: string,
             fullnotestxt: string,
         }[] = notes_array.map(note =>{
-            if(note.noteid === openedNote.noteid)
+            if(note.noteid === noteid)
                 return {
-                    noteid: openedNote.noteid,
+                    noteid: noteid,
                     last_edited_date: noteDateState === undefined ? openedNote.last_edited_date : noteDateState,
                     islocked: noteLockState === undefined ? openedNote.islocked : noteLockState,
                     note_txt_colour: noteTxtColState === undefined ? openedNote.note_txt_colour : noteTxtColState,
@@ -105,8 +109,30 @@ function App() {
         set_notes_array(notes);
     }
 
-    function createNote(){
-        
+    function closeTextEditor(noteid: string, notedata: string){
+        saveNoteChanges(noteid, notedata);
+        changeToPage("Home");
+    }
+
+    function createNote(textdata: string){
+        changeToPage("Home");
+        const Note_obj: {
+            noteid: string,
+            last_edited_date: string,
+            islocked: boolean,
+            note_txt_colour: string,
+            note_bg_colour: string,
+            fullnotestxt: string,
+        } = {
+            noteid: "note" + tempNoteCount.toString(),
+            last_edited_date: new Date().toDateString(),
+            islocked: false,
+            note_txt_colour: colours.white900,
+            note_bg_colour: colours.black900,
+            fullnotestxt: textdata,
+          };
+        setCount(tempNoteCount + 1);
+        set_notes_array(oldArray => [...oldArray, Note_obj]);
     }
 
     const getSizeInBytes = () => {
@@ -181,7 +207,7 @@ function App() {
                                                 apptheme={isLighttheme} 
                                                 generalcs={general_cs} 
                                                 openedNote={openedNote}
-                                                closenote={saveNoteChanges}
+                                                closenote={closeTextEditor}
                                                 handleNoteChanges={handleNoteChanges}/>
                                 case "Settings":
                                     return <Settings 

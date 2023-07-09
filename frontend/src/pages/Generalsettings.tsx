@@ -2,7 +2,7 @@ import Banner from "../components/Banner";
 import { FunctionComponent, useEffect, useState } from 'react';
 import { colours, shadows } from '../styles/styles';
 import { motion } from 'framer-motion';
-import { Checkicon, Storageicon, Trashicon, Chevrondownw, Calendaricon, Lockicon } from "../icons/icons";
+import { Checkicon, Storageicon, Trashicon, Chevrondownw, Calendaricon, Lockicon, Unlockicon } from "../icons/icons";
 import useLocalStorage from "use-local-storage";
 import { useMouseStore, useStorageStore, useNotesSizeStore } from '../stateStore';
 import { Greet } from "../../wailsjs/go/main/App";
@@ -53,7 +53,24 @@ const Generalsettings: FunctionComponent<Generalsettingsprops> = ({apptheme, gen
     function unlockPassword(){
         //request users desktop password and check if matching
         //return if not else
-        set_unlocked(true)
+        if(state.newpassword === "" && password === ""){
+            set_unlocked(true);
+            return;
+        }
+        if(state.newpassword === ""){
+            (document.getElementById("passwordinput") as HTMLInputElement)!.value = "Please enter a valid password";
+            return;
+        }
+
+        if(state.newpassword !== password){
+            (document.getElementById("passwordinput") as HTMLInputElement)!.value = "Password is incorrect";
+            return;
+        }
+        else{
+            set_unlocked(true);
+            return;
+        }
+        
     }
 
     useEffect(() => {
@@ -96,7 +113,7 @@ const Generalsettings: FunctionComponent<Generalsettingsprops> = ({apptheme, gen
             </h2>
             <div className="flex h-[24px] items-center mt-[20px] flex-wrap">
                 <motion.div className="mr-[35px]" whileTap={{scale: 0.97}} whileHover={{scale: 1.03}} onClick={unlockPassword}>
-                    <Lockicon apptheme={apptheme}/>
+                    {unlocked ? <Unlockicon apptheme={apptheme} /> : <Lockicon apptheme={apptheme}/>}
                 </motion.div>
                 <p className="w-[84px] mr-[35px] font-['Inter'] text-[12px] italic" 
                     style={{color: apptheme ? colours.black900 : colours.white900 }}>
@@ -106,7 +123,8 @@ const Generalsettings: FunctionComponent<Generalsettingsprops> = ({apptheme, gen
                     id="passwordinput"
                     name="newpassword"
                     type="text" 
-                    placeholder="enter a new password here..."
+                    value={unlocked ? password : ""}
+                    placeholder={unlocked ? "enter a new password here..." : "Enter your current password"}
                     style={{ color: colours.white900, background: generalcs, boxShadow: shadows.bgShadow,}} 
                     onChange={handlechange}
                     className="font-['Inter'] text-[12px] w-[351px] h-[24px] rounded-[20px] italic
@@ -148,7 +166,7 @@ const Generalsettings: FunctionComponent<Generalsettingsprops> = ({apptheme, gen
                 </motion.div>
                 <p className="mr-[35px] font-['Inter'] text-[12px] italic" 
                     style={{color: apptheme ? colours.black900 : colours.white900 }}>
-                        set as new password
+                        delete all notes
                 </p>
             </div>
 

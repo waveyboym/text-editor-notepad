@@ -99,7 +99,6 @@ const Notepreview : FunctionComponent<NotepreviewProps> = ({note, apptheme, gene
                 <div className="mt-[3px] ml-[17px] mr-[17px] mb-[17px] overflow-hidden text-ellipsis text-left"
                     style={{height: "calc(100% - 52px)", width: "calc(100% - 34px)"}}
                 >
-                    {note.noteid}
                     <ContentEditable
                         className="box-border border-none outline-none resize-none text-[12px]
                         w-full h-full overflow-y-auto break-words overflow-x-clip font-['Inter']"
