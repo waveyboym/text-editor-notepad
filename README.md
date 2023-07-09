@@ -1,7 +1,7 @@
 # text-editor-notepad
 a simple text editor application done with **<a href="https://wails.io/" target="_blank" rel="noreferrer">wails</a>** and **<a href="https://reactjs.org/" target="_blank" rel="noreferrer">react</a>** + **<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">typescript</a>** + **<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>**
 
-**NB: Please note this app is still under heavy development and a lot still does not work**
+**NB: Please note this app is still under heavy development and a lot still does not work and/or still needs to be fixed**
 
 # Presentation
 ![presentation](preview-img/notes-app.png "presentation")
